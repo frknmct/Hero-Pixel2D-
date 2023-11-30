@@ -26,6 +26,7 @@ public class HeroKnight : MonoBehaviour {
     private float               m_rollDuration = 8.0f / 14.0f;
     private float               m_rollCurrentTime;
 
+    public GameManager gameManager;
 
     // Use this for initialization
     void Start ()
@@ -110,10 +111,12 @@ public class HeroKnight : MonoBehaviour {
         else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
         {
             m_currentAttack++;
-
             // Loop back to one after third attack
             if (m_currentAttack > 3)
+            {
                 m_currentAttack = 1;
+            }
+                
 
             // Reset Attack combo if time since last attack is too large
             if (m_timeSinceAttack > 1.0f)
