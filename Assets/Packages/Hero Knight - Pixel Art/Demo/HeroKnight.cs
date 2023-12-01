@@ -27,6 +27,7 @@ public class HeroKnight : MonoBehaviour {
     private float               m_rollCurrentTime;
 
     public GameManager gameManager;
+    public GameObject sort;
 
     // Use this for initialization
     void Start ()
@@ -76,12 +77,14 @@ public class HeroKnight : MonoBehaviour {
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
+            sort.gameObject.transform.localPosition = new Vector3(-0.6f,0.7f,0f);
         }
             
         else if (inputX < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
+            sort.gameObject.transform.localPosition = new Vector3(0.6f,0.7f,0f);
         }
 
         // Move
@@ -111,6 +114,15 @@ public class HeroKnight : MonoBehaviour {
         else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
         {
             m_currentAttack++;
+            if (m_facingDirection == 1)
+            {
+                sort.gameObject.transform.localPosition = new Vector3(sort.gameObject.transform.localPosition.x + 1.8f,0.7f,0)  ;
+            }else
+            {
+                sort.gameObject.transform.localPosition = new Vector3(sort.gameObject.transform.localPosition.x - 1.8f,0.7f,0)  ;
+            }
+            
+            gameManager.onAttack = true;
             // Loop back to one after third attack
             if (m_currentAttack > 3)
             {
@@ -128,7 +140,22 @@ public class HeroKnight : MonoBehaviour {
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }
-
+        
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (m_facingDirection == 1)
+            {
+                sort.gameObject.transform.localPosition = new Vector3(-0.64f,0.78f,0f);
+            }
+            else
+            {
+                sort.gameObject.transform.localPosition = new Vector3(0.64f,0.78f,0f);
+            }
+            
+            gameManager.onAttack = false;
+            
+        }
+        
         // Block
         else if (Input.GetMouseButtonDown(1) && !m_rolling)
         {
