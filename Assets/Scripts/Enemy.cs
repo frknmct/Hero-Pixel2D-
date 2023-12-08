@@ -25,14 +25,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
-        
-        
-        
-        playerDistance = gameObject.transform.position - player.gameObject.transform.position;
-        if (playerDistance.x >= 0.1f)
-        {
-            
-        }
         Debug.Log("hasar sayısı : " + takenHitCount.ToString());
         if (takenHitCount == deadHitCount)
         {
@@ -40,6 +32,7 @@ public class Enemy : MonoBehaviour
             //gameObject.SetActive(false);
             e_animator.SetTrigger("Death");
             Debug.Log("öldü");
+            StartCoroutine(DieEnemy());
         }
     }
 
@@ -48,8 +41,15 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player" && _gameManager.onAttack == true)
         {
             UnityEngine.Debug.Log("vuruyor");
+            e_animator.SetTrigger("Hurt");
             takenHitCount++;
         }
         
+    }
+
+    IEnumerator DieEnemy()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(this.gameObject);
     }
 }
